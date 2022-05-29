@@ -1,0 +1,49 @@
+This will be your grammar file in future assignments
+Leave it as it is for now
+GRAMMAR:
+
+S  -> FunctionState
+
+Declare -> Assignment LA Type
+Declaration -> Assignment LA Type; | id LA Type;
+LA -> , Assignment LA | , id LA | ^
+Type -> int | char
+
+InputState  -> in id;
+
+Assignment -> id <- E {Assignment.v = id.lexeme + " = " + E.v}
+AssignState -> id <- E; {AssignState.v = id.lexeme + " = " + E.v}
+
+
+
+E  ->  T{E.v = E.v + T.v}E' {E.v = E'.v + E.v}
+E' -> +TE' {E'.v =  E'.v + '+' + T.v} | -TE' | ^
+T  ->  G  {T.v = T.v + G.v} T' {T.v = T'.v + T.v}
+T' -> *GT' | /GT' | %GT' | ^ 
+G  -> char | id   | num { G.v = lexeme + id/char/num}
+
+PrintState -> print Stuff; | println Stuff; { PrintState  = "out" + Stuff.v}
+Stuff -> string {Stuff.v = string.lexeme} | E {Stuff.v = E.v}| ^  
+
+Condition -> E ro E
+
+ifElseState -> if Condition: begin Statements end Next
+Next -> Else|Elif Next| ^
+Else -> else : begin Statements end 
+Elif -> elif condition : begin Statements end
+
+forLoop -> for Assignment {forLoop.v = Assignment.v}, Condition {forLoop.v = forLoop.v +  Assignment.v}, Assignment: begin Statements end
+
+FunctionState -> func Type id Param: begin Statements end
+		FunctionState| ^ {}
+Param -> id Type NextParam | ^
+NextParam -> , id Type NextParam| ^
+
+CallState -> call id CallParam;
+CallParam -> E MoreParam | ^
+MoreParam -> , E MoreParam | ^ 
+
+Statements -> ifElseState Statements |
+	      Declaration Statements | AssignState Statements |
+	      forLoop Statements | InputState Statements | 
+	      PrintState Statements | CallState Statements | ^

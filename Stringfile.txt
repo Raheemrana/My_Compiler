@@ -1,0 +1,7 @@
+Enter any number: ;
+x is less than 0;
+x is equal to 1;
+x is equal to 2;
+x is equal to 3;
+x is equal to 4;
+x is greater than 4;

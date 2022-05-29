@@ -1,0 +1,7 @@
+HOW TO RUN WSL ON WINDOWS
+type "wsl --install" in powershell administrator mode
+download ubuntu LTS from windows store
+Go to Start->Window features On and Off->Window subsystem for Linux
+Finally open ubuntu LTS Application and let it run
+Now download WSL extension in VS code
+Now you can use it :)
